@@ -10,7 +10,8 @@ Note Taker that can be used to write and save notes. This application will use a
 * When I click on an existing note in the list in the left-hand column, THEN the note appears in the right-hand column.
 * When I click on the Write icon in the navigation at the top of the page, I am presented with empty fields to enter a new note title and the note’s text in the right-hand column.
 
-![img](./)
+![img](./public/assets/images/expressnotetaker.jpeg)
 
 https://github.com/coleyrockin/ExpressNoteTaker
+
 coleyrockin@aol.com

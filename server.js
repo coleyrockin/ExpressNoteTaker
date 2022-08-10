@@ -47,3 +47,8 @@ function createNewNote(body, notesArray) {
     );
     return newNote;
 }
+
+//App port listener
+app.listen(PORT, () => {
+    console.log(`API server now on port ${PORT}!`);
+});
