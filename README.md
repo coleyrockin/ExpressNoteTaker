@@ -13,7 +13,7 @@ Note Taker that can be used to write and save notes. This application will use a
 * This project was built using node.js, express, javascript, html, and css. This application helped get experience using npm package "express", and Heroku Cloud Application Platform.
 
 ### Website Link
-Heroku deployed app: [Express Note Taker](https://git.heroku.com/expressnotetaking.git)
+Heroku deployed app: [Express Note Taker](https://expressnotetaking.herokuapp.com/)
 
 ### Contact or questions
 [Coleyrockin Github](https://github.com/coleyrockin)
