@@ -1,16 +1,17 @@
-// Require Dependencies
-const express = require("express");
-const fs = require("fs");
+
+const PORT = process.env.PORT || 3001;
+const fs = require('fs');
 const path = require('path');
 
-// Initialize express app
+const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+const allNotes = require('./db/db.json');
 
 // Setup data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static('public'));
 
 //Require routes file
 require('./routes/routes')(app);
