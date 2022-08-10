@@ -21,5 +21,5 @@ Heroku deployed app: [Express Note Taker](https://expressnotetaking.herokuapp.co
 [Coleyrockin@aol.com](mailto:coleyrockin@aol.com)
 
 ### Screenshot
-![img](./public/assets/images/expressnotetaker.jpeg)
+![img](./public/assets/images/expreesnotes2.jpeg)
 
