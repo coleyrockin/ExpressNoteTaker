@@ -1,0 +1,7 @@
+[build]
+  publish = "public"
+
+[[redirects]]
+  from = "/notes"
+  to = "/notes.html"
+  status = 200

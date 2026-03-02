@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Note Taker</title>
     <link
       rel="stylesheet"
@@ -19,21 +18,21 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="/">Note Taker </a>
+    <nav class="navbar navbar-dark">
+      <a class="navbar-brand" href="/">Note Taker</a>
       <div class="icons">
         <i class="fas fa-save text-light save-note"></i>
         <i class="fas fa-plus text-light new-note"></i>
       </div>
     </nav>
-    <div class="container-fluid">
-      <div class="row">
+    <div class="container-fluid notes-wrapper">
+      <div class="row" style="height: 100%">
         <div class="col-4 list-container">
           <div class="card">
             <ul class="list-group"></ul>
           </div>
         </div>
-        <div class="col-8">
+        <div class="col-8 editor-area">
           <input
             class="note-title"
             placeholder="Note Title"
