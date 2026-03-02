@@ -1,10 +1,53 @@
+// localStorage-backed data layer
+const STORAGE_KEY = 'note-taker-notes';
+const COUNTER_KEY = 'note-taker-counter';
+
+const NoteStore = {
+  _getAll() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+  },
+
+  _saveAll(notes) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+  },
+
+  _nextId() {
+    const current = parseInt(localStorage.getItem(COUNTER_KEY) || '0', 10);
+    const next = current + 1;
+    localStorage.setItem(COUNTER_KEY, String(next));
+    return next;
+  },
+
+  getAll() {
+    return this._getAll();
+  },
+
+  save(note) {
+    const notes = this._getAll();
+    note.id = this._nextId();
+    notes.push(note);
+    this._saveAll(notes);
+    return note;
+  },
+
+  delete(id) {
+    const notes = this._getAll();
+    const filtered = notes.filter((note) => note.id !== id);
+    this._saveAll(filtered);
+  },
+};
+
+// DOM elements
+const isNotesPage = ['/notes', '/notes.html'].includes(window.location.pathname);
+
 let noteTitle;
 let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
-if (window.location.pathname === '/notes') {
+if (isNotesPage) {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
@@ -24,31 +67,6 @@ const hide = (elem) => {
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
-
-const getNotes = () =>
-  fetch('/api/notes', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-const saveNote = (note) =>
-  fetch('/api/notes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(note),
-  });
-
-const deleteNote = (id) =>
-  fetch(`/api/notes/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -71,15 +89,14 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value,
   };
-  saveNote(newNote).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  NoteStore.save(newNote);
+  activeNote = {};
+  getAndRenderNotes();
+  renderActiveNote();
 };
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
-  // Prevents the click listener for the list from being called when the button inside of it is clicked
   e.stopPropagation();
 
   const note = e.target;
@@ -89,10 +106,9 @@ const handleNoteDelete = (e) => {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  NoteStore.delete(noteId);
+  getAndRenderNotes();
+  renderActiveNote();
 };
 
 // Sets the activeNote and displays it
@@ -102,8 +118,8 @@ const handleNoteView = (e) => {
   renderActiveNote();
 };
 
-// Sets the activeNote to and empty object and allows the user to enter a new note
-const handleNewNoteView = (e) => {
+// Sets the activeNote to an empty object and allows the user to enter a new note
+const handleNewNoteView = () => {
   activeNote = {};
   renderActiveNote();
 };
@@ -117,15 +133,13 @@ const handleRenderSaveBtn = () => {
 };
 
 // Render the list of note titles
-const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
-  if (window.location.pathname === '/notes') {
+const renderNoteList = (jsonNotes) => {
+  if (isNotesPage) {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
 
   let noteListItems = [];
 
-  // Returns HTML element with or without a delete button
   const createLi = (text, delBtn = true) => {
     const liEl = document.createElement('li');
     liEl.classList.add('list-group-item');
@@ -143,7 +157,6 @@ const renderNoteList = async (notes) => {
         'fas',
         'fa-trash-alt',
         'float-right',
-        'text-danger',
         'delete-note'
       );
       delBtnEl.addEventListener('click', handleNoteDelete);
@@ -165,15 +178,15 @@ const renderNoteList = async (notes) => {
     noteListItems.push(li);
   });
 
-  if (window.location.pathname === '/notes') {
+  if (isNotesPage) {
     noteListItems.forEach((note) => noteList[0].append(note));
   }
 };
 
-// Gets notes from the db and renders them to the sidebar
-const getAndRenderNotes = () => getNotes().then(renderNoteList);
+// Gets notes from localStorage and renders them to the sidebar
+const getAndRenderNotes = () => renderNoteList(NoteStore.getAll());
 
-if (window.location.pathname === '/notes') {
+if (isNotesPage) {
   saveNoteBtn.addEventListener('click', handleNoteSave);
   newNoteBtn.addEventListener('click', handleNewNoteView);
   noteTitle.addEventListener('keyup', handleRenderSaveBtn);
