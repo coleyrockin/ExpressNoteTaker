@@ -12,11 +12,11 @@ A simple note-taking application that runs entirely in your browser. Create, vie
 
 ## Live Demo
 
-[Note Taker on Netlify](https://expressnotetaker.netlify.app/)
+[Note Taker on Netlify](https://expressnotetaker.netlify.app/notes)
 
 ## Screenshot
 
-![Note Taker Screenshot](./public/assets/images/expreesnotes2.jpeg)
+![Updated Note Taker UI](./public/assets/images/expressnotetaker.jpeg)
 
 ## Local Development
 
