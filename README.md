@@ -8,7 +8,8 @@ A simple note-taking application that runs entirely in your browser. Create, vie
 - View saved notes by clicking them in the sidebar
 - Delete notes with the trash icon
 - Notes persist across browser sessions via localStorage
-- Clean, responsive Bootstrap-based UI
+- Modern, clean UI with minimalist design aesthetic
+- Smooth animations and intuitive hover interactions
 
 ## Live Demo
 
