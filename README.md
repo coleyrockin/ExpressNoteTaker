@@ -16,7 +16,7 @@ A simple note-taking application that runs entirely in your browser. Create, vie
 
 ## Screenshot
 
-![Updated Note Taker UI](./public/assets/images/expressnotetaker.jpeg)
+![Refreshed Note Taker UI](./public/assets/images/expressnotetaker-refresh.png)
 
 ## Local Development
 
